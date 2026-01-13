@@ -1,10 +1,12 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Linking, Pressable, SafeAreaView, ScrollView, Text, View, Image } from 'react-native';
 import { useEffect, useState } from 'react';
+import { LinearGradient } from 'expo-linear-gradient';
 import type { Outfit } from '../../services/fashionApi';
 import { searchOutfits } from '../../services/fashionApi';
 import { FavoriteButton } from '../../components/FavoriteButton';
 import { getFavoriteMap, toggleFavorite } from '../../services/favorites';
+import { GRADIENTS } from '../../constants/styles';
 
 export default function OutfitDetailScreen() {
   const router = useRouter();
@@ -121,11 +123,15 @@ export default function OutfitDetailScreen() {
           {outfit.sourceUrl ? (
             <Pressable
               onPress={() => Linking.openURL(outfit.sourceUrl!)}
-              className="items-center justify-center rounded-2xl bg-[#8b5cf6] py-4"
+              className="overflow-hidden rounded-2xl"
             >
-              <Text className="text-base font-bold text-white">
-                View source{outfit.photographer ? ` (by ${outfit.photographer})` : ''}
-              </Text>
+              <LinearGradient colors={GRADIENTS.button} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}>
+                <View className="items-center justify-center py-4">
+                  <Text className="text-base font-extrabold text-white">
+                    View source{outfit.photographer ? ` (by ${outfit.photographer})` : ''}
+                  </Text>
+                </View>
+              </LinearGradient>
             </Pressable>
           ) : null}
         </View>

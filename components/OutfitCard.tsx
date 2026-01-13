@@ -1,6 +1,7 @@
-import { Image, Pressable, Text, View } from 'react-native';
+import { ImageBackground, Pressable, Text, View } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import type { Outfit } from '../services/fashionApi';
-import { COLORS } from '../constants/styles';
+import { COLORS, GRADIENTS } from '../constants/styles';
 
 export function OutfitCard(props: {
   outfit: Outfit;
@@ -15,22 +16,33 @@ export function OutfitCard(props: {
       style={{ backgroundColor: COLORS.card, borderColor: COLORS.cardBorder }}
     >
       <View className="relative">
-        <Image source={{ uri: outfit.imageThumbUrl }} className="h-64 w-full" resizeMode="cover" />
-        <View className="absolute left-3 top-3 rounded-full bg-black/60 px-3 py-1">
-          <Text className="text-xs font-semibold text-white">{outfit.category}</Text>
-        </View>
-        {props.rightAccessory ? (
-          <View className="absolute right-3 top-3">{props.rightAccessory}</View>
-        ) : null}
-      </View>
+        <ImageBackground source={{ uri: outfit.imageThumbUrl }} className="h-72 w-full" resizeMode="cover">
+          <LinearGradient colors={GRADIENTS.card} className="h-full w-full">
+            <View className="flex-1 px-3 pb-3 pt-3">
+              <View className="flex-row items-start justify-between">
+                <View
+                  className="rounded-full border px-3 py-1"
+                  style={{
+                    backgroundColor: 'rgba(255,255,255,0.10)',
+                    borderColor: 'rgba(255,255,255,0.18)',
+                  }}
+                >
+                  <Text className="text-xs font-extrabold text-white">{outfit.category}</Text>
+                </View>
+                {props.rightAccessory ? <View>{props.rightAccessory}</View> : null}
+              </View>
 
-      <View className="gap-1 px-4 py-4">
-        <Text className="text-base font-bold text-white" numberOfLines={1}>
-          {outfit.title}
-        </Text>
-        <Text className="text-sm text-white/70" numberOfLines={2}>
-          {outfit.description}
-        </Text>
+              <View className="mt-auto gap-1">
+                <Text className="text-lg font-extrabold text-white" numberOfLines={1}>
+                  {outfit.title}
+                </Text>
+                <Text className="text-sm text-white/90" numberOfLines={2}>
+                  {outfit.description}
+                </Text>
+              </View>
+            </View>
+          </LinearGradient>
+        </ImageBackground>
       </View>
     </Pressable>
   );

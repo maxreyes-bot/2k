@@ -3,6 +3,7 @@ import { FlatList, SafeAreaView, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { CategoryTabs } from '../components/CategoryTabs';
 import { FavoriteButton } from '../components/FavoriteButton';
+import { HeroHeader } from '../components/HeroHeader';
 import { Loader } from '../components/Loader';
 import { OutfitCard } from '../components/OutfitCard';
 import { SearchBar } from '../components/SearchBar';
@@ -73,8 +74,10 @@ export default function SearchScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-[#0b0b0f] px-4">
-      <View className="gap-3 py-4">
-        <Text className="text-2xl font-bold text-white">Search</Text>
+      <View className="pt-4">
+        <HeroHeader title="Search" subtitle="Find a vibe: baggy jeans, oversized hoodie, edgy…" />
+      </View>
+      <View className="gap-3 pb-4">
         <SearchBar value={query} onChangeText={setQuery} placeholder="baggy jeans, oversized hoodie…" />
         <CategoryTabs value={category} onChange={setCategory} />
       </View>

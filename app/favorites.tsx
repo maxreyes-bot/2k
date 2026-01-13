@@ -5,6 +5,7 @@ import type { Outfit } from '../services/fashionApi';
 import { clearFavorites, getFavoritesList, removeFavorite } from '../services/favorites';
 import { OutfitCard } from '../components/OutfitCard';
 import { FavoriteButton } from '../components/FavoriteButton';
+import { HeroHeader } from '../components/HeroHeader';
 
 export default function FavoritesScreen() {
   const router = useRouter();
@@ -27,12 +28,13 @@ export default function FavoritesScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-[#0b0b0f] px-4">
-      <View className="py-4">
-        <Text className="text-2xl font-bold text-white">Favorites</Text>
-        <Text className="mt-2 text-white/70">Your saved fits, available offline.</Text>
+      <View className="pt-4">
+        <HeroHeader title="Favorites" subtitle="Your saved fits — instant drip, even offline." />
+      </View>
+      <View className="pb-4">
         {items.length ? (
           <Text
-            className="mt-3 text-sm font-semibold text-white/80"
+            className="text-sm font-extrabold text-white"
             onPress={async () => {
               await clearFavorites();
               await refresh();
@@ -70,8 +72,8 @@ export default function FavoritesScreen() {
         />
       ) : (
         <View className="flex-1 items-center justify-center">
-          <Text className="text-white/80">No favorites yet.</Text>
-          <Text className="mt-2 text-white/60">Tap ♡ on a fit to save it here.</Text>
+          <Text className="text-white">No favorites yet.</Text>
+          <Text className="mt-2 text-white">Tap ♡ on a fit to save it here.</Text>
         </View>
       )}
     </SafeAreaView>

@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
-import { Link, useRouter } from 'expo-router';
+import { useRouter } from 'expo-router';
 import { FlatList, SafeAreaView, Text, View } from 'react-native';
 import { CategoryTabs } from '../components/CategoryTabs';
 import { FavoriteButton } from '../components/FavoriteButton';
+import { HeroHeader } from '../components/HeroHeader';
 import { Loader } from '../components/Loader';
 import { OutfitCard } from '../components/OutfitCard';
 import type { Outfit, StyleCategory } from '../services/fashionApi';
@@ -69,21 +70,13 @@ export default function DiscoverScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-[#0b0b0f] px-4">
-      <View className="flex-row items-center justify-between py-4">
-        <Text className="text-2xl font-bold text-white">Swaggy Fits</Text>
-        <View className="flex-row gap-3">
-          <Link href="/search" className="text-white/90">
-            Search
-          </Link>
-          <Link href="/favorites" className="text-white/90">
-            Favorites
-          </Link>
-        </View>
+      <View className="pt-4">
+        <HeroHeader title="Swaggy Fits" subtitle="Bright, bold, and drip-ready outfit inspiration." />
       </View>
 
       <View className="pb-3">
         <CategoryTabs value={category} onChange={setCategory} />
-        <Text className="mt-2 text-xs text-white/50">
+        <Text className="mt-2 text-xs font-semibold text-white/80">
           {source === 'unsplash'
             ? 'Powered by Unsplash'
             : 'Tip: set EXPO_PUBLIC_UNSPLASH_KEY for richer results'}
