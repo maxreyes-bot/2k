@@ -1,43 +1,48 @@
-import { useEffect, useState } from 'react';
-import { Link, useRouter } from 'expo-router';
+import { useEffect, useMemo, useState } from 'react';
 import { FlatList, SafeAreaView, Text, View } from 'react-native';
+import { useRouter } from 'expo-router';
 import { CategoryTabs } from '../components/CategoryTabs';
 import { FavoriteButton } from '../components/FavoriteButton';
 import { Loader } from '../components/Loader';
 import { OutfitCard } from '../components/OutfitCard';
+import { SearchBar } from '../components/SearchBar';
 import type { Outfit, StyleCategory } from '../services/fashionApi';
 import { searchOutfits } from '../services/fashionApi';
 import { getFavoriteMap, toggleFavorite } from '../services/favorites';
 
-export default function DiscoverScreen() {
+export default function SearchScreen() {
   const router = useRouter();
   const [category, setCategory] = useState<StyleCategory>('Streetwear');
+  const [query, setQuery] = useState('');
+
   const [page, setPage] = useState(1);
   const [items, setItems] = useState<Outfit[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
-  const [source, setSource] = useState<'unsplash' | 'fallback'>('fallback');
   const [favoriteIds, setFavoriteIds] = useState<Record<string, boolean>>({});
+
+  const trimmed = useMemo(() => query.trim(), [query]);
 
   useEffect(() => {
     let cancelled = false;
     setLoading(true);
     setPage(1);
-    searchOutfits({ category, page: 1, perPage: 12 })
+
+    searchOutfits({ category, query: trimmed, page: 1, perPage: 12 })
       .then((r) => {
         if (cancelled) return;
         setItems(r.outfits);
         setHasMore(r.hasMore);
-        setSource(r.source);
       })
       .finally(() => {
         if (cancelled) return;
         setLoading(false);
       });
+
     return () => {
       cancelled = true;
     };
-  }, [category]);
+  }, [category, trimmed]);
 
   useEffect(() => {
     let cancelled = false;
@@ -57,11 +62,10 @@ export default function DiscoverScreen() {
     setLoading(true);
     const next = page + 1;
     try {
-      const r = await searchOutfits({ category, page: next, perPage: 12 });
+      const r = await searchOutfits({ category, query: trimmed, page: next, perPage: 12 });
       setItems((prev) => [...prev, ...r.outfits]);
       setHasMore(r.hasMore);
       setPage(next);
-      setSource(r.source);
     } finally {
       setLoading(false);
     }
@@ -69,25 +73,10 @@ export default function DiscoverScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-[#0b0b0f] px-4">
-      <View className="flex-row items-center justify-between py-4">
-        <Text className="text-2xl font-bold text-white">Swaggy Fits</Text>
-        <View className="flex-row gap-3">
-          <Link href="/search" className="text-white/90">
-            Search
-          </Link>
-          <Link href="/favorites" className="text-white/90">
-            Favorites
-          </Link>
-        </View>
-      </View>
-
-      <View className="pb-3">
+      <View className="gap-3 py-4">
+        <Text className="text-2xl font-bold text-white">Search</Text>
+        <SearchBar value={query} onChangeText={setQuery} placeholder="baggy jeans, oversized hoodie…" />
         <CategoryTabs value={category} onChange={setCategory} />
-        <Text className="mt-2 text-xs text-white/50">
-          {source === 'unsplash'
-            ? 'Powered by Unsplash'
-            : 'Tip: set EXPO_PUBLIC_UNSPLASH_KEY for richer results'}
-        </Text>
       </View>
 
       <FlatList
