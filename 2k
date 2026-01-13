@@ -1,0 +1,159 @@
+📱 Cursor Prompt: Swaggy Style Outfit Inspiration App (Expo + React Native)
+App Overview
+
+Build a cross-platform native mobile fashion inspiration app using Expo + React Native that helps users discover swaggy, stylish outfit ideas. The app should showcase curated fashion looks, outfit combinations, and styling inspiration using a public fashion-related API or open image/content source.
+
+The app must work seamlessly on iOS, Android, and Web, with a clean UI, smooth navigation, and modern styling. It should be structured for easy deployment to Vercel for the web version and Expo for mobile builds.
+
+Technical Requirements
+
+Framework: Expo (React Native)
+
+Language: TypeScript
+
+Routing: Expo Router
+
+Styling: NativeWind (Tailwind CSS for React Native) or StyleSheet
+
+Data Fetching: fetch or axios
+
+State Management: React Hooks (useState, useEffect)
+
+Environment Variables: Expo-compatible (EXPO_PUBLIC_*)
+
+Web Compatibility: Must run with expo start --web
+
+Deployment Target: Vercel
+
+Core Features
+
+Home / Discover Screen
+
+Display trending “swaggy” outfit ideas
+
+Outfit cards with image, style tag (e.g., Streetwear, Casual, Luxury)
+
+Infinite scroll or pagination
+
+Style Categories
+
+Filter outfits by:
+
+Streetwear
+
+Casual
+
+Formal
+
+Vintage
+
+Luxury
+
+Gender-neutral and inclusive styles
+
+Outfit Detail Screen
+
+Full-screen outfit image
+
+Description of the look
+
+Clothing items breakdown (top, bottom, shoes, accessories)
+
+Style tips (e.g., “pair with high-top sneakers”)
+
+Search & Inspiration
+
+Search outfits by keyword (e.g., “baggy jeans”, “oversized hoodie”)
+
+Optional mood-based inspiration (minimal, bold, edgy)
+
+Favorites (Optional)
+
+Save favorite outfits locally using AsyncStorage
+
+API Integration
+
+Use a free, open fashion or image API to power outfit inspiration.
+
+Recommended Options:
+
+Option 1: Unsplash API (Fashion-based image search)
+
+Base URL: https://api.unsplash.com/
+
+Endpoint: /search/photos
+
+Query examples: streetwear outfit, fashion style, urban fashion
+
+Requires free API key (use env variable)
+
+Option 2: Pexels API (Alternative)
+
+Fashion & outfit photography
+
+Free developer access
+
+Good for lifestyle & streetwear images
+
+If API keys are required, store them in:
+
+process.env.EXPO_PUBLIC_UNSPLASH_KEY
+
+Styling & UI Guidelines
+
+Mobile-first design
+
+Clean, bold typography
+
+Dark-mode inspired aesthetic preferred
+
+High-contrast outfit cards
+
+Rounded edges, smooth shadows
+
+Swipe-friendly UI
+
+Use Tailwind utility classes if NativeWind is enabled
+
+Navigation Structure
+
+Use Expo Router with stack navigation:
+
+app/
+ ├── index.tsx           // Discover
+ ├── search.tsx          // Search styles
+ ├── favorites.tsx       // Saved outfits
+ └── outfit/
+      └── [id].tsx       // Outfit details
+
+Suggested Project Structure
+components/
+ ├── OutfitCard.tsx
+ ├── CategoryTabs.tsx
+ ├── SearchBar.tsx
+ ├── Loader.tsx
+
+services/
+ └── fashionApi.ts
+
+constants/
+ └── styles.ts
+
+Deployment Readiness
+
+Compatible with Vercel Web Deployment
+
+No native-only dependencies
+
+Uses expo export or expo build:web
+
+Includes:
+
+.env.example
+
+README.md with setup instructions
+
+App must run with:
+
+npm install
+npx expo start
